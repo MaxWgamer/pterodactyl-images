@@ -22,9 +22,6 @@
 # SOFTWARE.
 #
 
-#Activate Mimalloc
-export LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libmimalloc.so"
-
 # Default the TZ environment variable to UTC.
 TZ=${TZ:-UTC}
 export TZ
@@ -35,25 +32,6 @@ export INTERNAL_IP
 
 # Switch to the container's working directory
 cd /home/container || exit 1
-
-# Print Memory Allocator Status
-printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mMemory Allocator Status\n"
-
-if [ -n "$LD_PRELOAD" ]; then
-    if [ -f "$LD_PRELOAD" ]; then
-        if echo "$LD_PRELOAD" | grep -q "mimalloc"; then
-             printf "\033[1m\033[32m✓ Mimalloc ACTIVE:\033[0m %s\n" "$LD_PRELOAD"
-        else
-             printf "\033[1m\033[33m⚠ Custom Allocator LOADED (Not Mimalloc):\033[0m %s\n" "$LD_PRELOAD"
-        fi
-    else
-        printf "\033[1m\033[31m✗ Mimalloc ERROR:\033[0m File not found: %s\n" "$LD_PRELOAD"
-        printf "\033[1m\033[33m⚠ WARNING:\033[0m Falling back to glibc malloc\n"
-        unset LD_PRELOAD
-    fi
-else
-    printf "\033[1m\033[33m⚠ Mimalloc DISABLED:\033[0m Using default glibc malloc\n"
-fi
 
 # Print Java version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mjava -version\n"
