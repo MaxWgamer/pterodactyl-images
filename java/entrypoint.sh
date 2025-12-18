@@ -37,7 +37,7 @@ export INTERNAL_IP
 cd /home/container || exit 1
 
 # Print if Jemalloc is active
-printf "\033[1m\033[36mcontainer@pterodactyl~ \033[0mMemory Allocator Status\n"
+printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mMemory Allocator Status\n"
 
 if [ -n "$LD_PRELOAD" ]; then
     # Vérifier que le fichier existe
