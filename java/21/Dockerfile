@@ -1,12 +1,11 @@
-FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:21-jdk-jammy
+FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:21-jdk-noble
 
 LABEL       author="Maxime Reperant" maintainer="maxime.reperant@freshperf.fr"
-
 LABEL       org.opencontainers.image.source="https://github.com/MaxWgamer/pterodactyl-images"
 LABEL       org.opencontainers.image.licenses=MIT
 
-RUN         apt update -y \
-            && apt install -y \
+RUN         apt-get update \
+            && apt-get install -y --no-install-recommends \
                 curl \
                 lsof \
                 ca-certificates \
@@ -19,18 +18,29 @@ RUN         apt update -y \
                 iproute2 \
                 libfreetype6 \
                 tini \
-				zip \
-				unzip
+                zip \
+                unzip \
+                locales \
+                libjemalloc2 \
+            && locale-gen en_US.UTF-8 \
+            && apt-get clean \
+            && rm -rf /var/lib/apt/lists/*
 
-## Setup user and working directory
+ENV         LC_ALL=en_US.UTF-8
+ENV         LANG=en_US.UTF-8
+ENV         LANGUAGE=en_US.UTF-8
+
+ENV         LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
+
 RUN         useradd -m -d /home/container -s /bin/bash container
 USER        container
 ENV         USER=container HOME=/home/container
 WORKDIR     /home/container
 
-STOPSIGNAL SIGINT
+STOPSIGNAL  SIGINT
 
 COPY        --chown=container:container ./../entrypoint.sh /entrypoint.sh
 RUN         chmod +x /entrypoint.sh
-ENTRYPOINT    ["/usr/bin/tini", "-g", "--"]
+
+ENTRYPOINT  ["/usr/bin/tini", "-g", "--"]
 CMD         ["/entrypoint.sh"]
