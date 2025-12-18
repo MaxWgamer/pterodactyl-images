@@ -33,6 +33,27 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+# Print if Jemalloc is active
+printf "\033[1m\033[36mcontainer@pterodactyl~ \033[0mMemory Allocator Status\n"
+
+if [ -n "$LD_PRELOAD" ]; then
+    # Vérifier que le fichier existe
+    if [ -f "$LD_PRELOAD" ]; then
+        JEMALLOC_VERSION=$(strings "$LD_PRELOAD" 2>/dev/null | grep -E "^jemalloc-[0-9]" | head -n1)
+        if [ -n "$JEMALLOC_VERSION" ]; then
+            printf "\033[1m\033[32m✓ Jemalloc ACTIVE:\033[0m %s\n" "$JEMALLOC_VERSION"
+        else
+            printf "\033[1m\033[32m✓ Jemalloc LOADED:\033[0m %s\n" "$LD_PRELOAD"
+        fi
+    else
+        printf "\033[1m\033[31m✗ Jemalloc ERROR:\033[0m File not found: %s\n" "$LD_PRELOAD"
+        printf "\033[1m\033[33m⚠ WARNING:\033[0m Falling back to glibc malloc\n"
+        unset LD_PRELOAD
+    fi
+else
+    printf "\033[1m\033[33m⚠ Jemalloc DISABLED:\033[0m Using default glibc malloc\n"
+fi
+
 # Print Java version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mjava -version\n"
 java -version
