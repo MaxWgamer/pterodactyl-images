@@ -22,7 +22,7 @@ RUN         apt-get update \
                 unzip \
                 locales \
                 libstdc++6 \
-                mimalloc \
+                libmimalloc-dev \
             && locale-gen en_US.UTF-8 \
             && apt-get clean \
             && rm -rf /var/lib/apt/lists/*

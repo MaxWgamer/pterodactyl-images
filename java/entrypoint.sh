@@ -23,7 +23,7 @@
 #
 
 #Activate Mimalloc
-export LD_PRELOAD="/usr/lib/libmimalloc.so"
+export LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libmimalloc.so"
 
 # Default the TZ environment variable to UTC.
 TZ=${TZ:-UTC}
