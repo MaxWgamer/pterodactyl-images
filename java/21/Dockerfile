@@ -30,8 +30,6 @@ ENV         LC_ALL=en_US.UTF-8
 ENV         LANG=en_US.UTF-8
 ENV         LANGUAGE=en_US.UTF-8
 
-ENV         LD_PRELOAD="/usr/lib/x86_64-linux-gnu/libjemalloc.so.2"
-
 RUN         useradd -m -d /home/container -s /bin/bash container
 USER        container
 ENV         USER=container HOME=/home/container
