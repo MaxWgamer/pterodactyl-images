@@ -23,7 +23,6 @@ RUN         apt-get update \
                 locales \
                 libstdc++6 \
             && locale-gen en_US.UTF-8 \
-            && apt-get clean \
             && rm -rf /var/lib/apt/lists/*
 
 ENV         LC_ALL=en_US.UTF-8
@@ -37,8 +36,7 @@ WORKDIR     /home/container
 
 STOPSIGNAL  SIGINT
 
-COPY        --chown=container:container ./../entrypoint.sh /entrypoint.sh
-RUN         chmod +x /entrypoint.sh
+COPY        --chown=container:container --chmod=755 ./../entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT  ["/usr/bin/tini", "-g", "--"]
 CMD         ["/entrypoint.sh"]
