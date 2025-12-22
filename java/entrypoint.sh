@@ -33,6 +33,19 @@ export INTERNAL_IP
 # Switch to the container's working directory
 cd /home/container || exit 1
 
+# Auto-configure Java Heap Memory
+# We calculate 90% of the container's memory limit to leave room for the OS/overhead.
+# This works around the Linux Kernel 6.12+ cgroup v2 detection bug in older JVMs.
+if [[ -n "${SERVER_MEMORY}" ]] && [[ "${SERVER_MEMORY}" -gt 0 ]]; then
+    # Calculate 90% of SERVER_MEMORY
+    JAVA_HEAP_SIZE=$((${SERVER_MEMORY} * 90 / 100))
+    JAVA_ARGS="-Xmx${JAVA_HEAP_SIZE}M"
+else
+    # Fallback for unlimited memory (0) or missing variable: use dynamic percentage
+    JAVA_ARGS="-XX:MaxRAMPercentage=90.0"
+fi
+export JAVA_ARGS
+
 # Print Java version
 printf "\033[1m\033[33mcontainer@pterodactyl~ \033[0mjava -version\n"
 java -version
