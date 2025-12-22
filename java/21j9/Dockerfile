@@ -1,4 +1,4 @@
-FROM        --platform=$TARGETOS/$TARGETARCH ibm-semeru-runtimes:open-21.0.5_11-jre-jammy
+FROM        --platform=$TARGETOS/$TARGETARCH ibm-semeru-runtimes:open-21.0.4_7-jre-jammy
 
 LABEL       author="Maxime Reperant" maintainer="maxime.reperant@freshperf.fr"
 LABEL       org.opencontainers.image.source="https://github.com/MaxWgamer/pterodactyl-images"
