@@ -1,4 +1,4 @@
-FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:11.0.13_8-jre-focal
+FROM        --platform=$TARGETOS/$TARGETARCH eclipse-temurin:11-jre-noble
 
 LABEL       author="Maxime Reperant" maintainer="maxime.reperant@freshperf.fr"
 LABEL       org.opencontainers.image.source="https://github.com/MaxWgamer/pterodactyl-images"
