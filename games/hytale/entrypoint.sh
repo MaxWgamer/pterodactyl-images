@@ -70,8 +70,8 @@ if [ "${INSTALL_SOURCEQUERY_PLUGIN}" == "1" ]; then
 	fi
 fi
 
-if [[ -f config.json && -n "$HYTALE_MAX_VIEW_RADIUS" ]]; then
-	jq ".MaxViewRadius = $HYTALE_MAX_VIEW_RADIUS" config.json > config.tmp.json && mv config.tmp.json config.json
+if [[ ! -f config.json ]]; then
+    echo '{"MaxViewRadius": 12}' > config.json
 fi
 
 /java.sh $@
