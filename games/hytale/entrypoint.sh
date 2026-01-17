@@ -33,10 +33,8 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 		unzip -o HytaleServer.zip -d .
 		
 		# Fix problem with date and AOT cache when unzip
-		NOW=$(date +%Y%m%d%H%M.%S)
-		date +%Y%m%d%H%M.%S
-		touch -t "$NOW" Server/HytaleServer.jar
-		touch -t "$NOW" Server/HytaleServer.aot
+		touch Server/HytaleServer.jar
+		touch Server/HytaleServer.aot
 
 		rm -f HytaleServer.zip
 
@@ -55,11 +53,6 @@ elif [[ -f "Server/Assets.zip" ]]; then
 elif [[ -f "HytaleServer.zip" ]]; then
 	unzip -o HytaleServer.zip -d .
 fi
-
-		NOW=$(date +%Y%m%d%H%M.%S)
-		date +%Y%m%d%H%M.%S
-		touch -t "$NOW" Server/HytaleServer.jar
-		touch -t "$NOW" Server/HytaleServer.aot
 
 # Download the latest hytale-sourcequery plugin if enabled
 if [ "${INSTALL_SOURCEQUERY_PLUGIN}" == "1" ]; then
