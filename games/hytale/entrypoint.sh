@@ -30,7 +30,7 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 			-patchline "$HYTALE_PATCHLINE" \
 			-download-path HytaleServer.zip
 
-		jar xf HytaleServer.zip
+		unzip -o HytaleServer.zip -d .
 
 		rm -f HytaleServer.zip
 
