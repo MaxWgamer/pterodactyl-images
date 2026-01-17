@@ -7,7 +7,7 @@ cd /home/container
 
 VERSION_CACHE_FILE="version.cache"
 
-LATEST_VERSION=$(./hytale-downloader/hytale-downloader-linux --print-version)
+LATEST_VERSION=$(./hytale-downloader/hytale-downloader-linux --print-version 2>/dev/null || true)
 
 CACHED_VERSION=""
 if [[ -f "$VERSION_CACHE_FILE" ]]; then
