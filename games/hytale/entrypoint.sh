@@ -31,6 +31,11 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 			-download-path HytaleServer.zip
 
 		unzip -o HytaleServer.zip -d .
+		
+		# Fix problem with date and AOT cache when unzip
+		NOW=$(date +%Y%m%d%H%M.%S)
+		touch -t "$NOW" Server/HytaleServer.jar
+		touch -t "$NOW" Server/HytaleServer.aot
 
 		rm -f HytaleServer.zip
 
