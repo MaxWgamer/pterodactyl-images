@@ -37,6 +37,12 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 		if [[ -n "$LATEST_VERSION" ]]; then
 			echo "$LATEST_VERSION" > "$VERSION_CACHE_FILE"
 		fi
+		
+		mkdir -p mods
+		LATEST_PERFORMANCE_SAVER_URL=$(curl -sSL https://api.github.com/repos/nitrado/hytale-plugin-performance-saver/releases/latest | jq -r '.assets[] | select(.name | endswith(".jar")) | .browser_download_url')
+		if [[ -n "$LATEST_PERFORMANCE_SAVER_URL" ]]; then
+			curl -sSL -o mods/nitrado-performance-saver.jar "$LATEST_PERFORMANCE_SAVER_URL"
+		fi
 	else
 		echo -e "Hytale is already up to date."
 	fi
