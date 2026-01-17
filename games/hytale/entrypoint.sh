@@ -3,6 +3,8 @@ set -e
 
 cd /home/container
 
+./hytale-downloader/hytale-downloader-linux --print-version
+
 VERSION_CACHE_FILE="version.cache"
 
 LATEST_VERSION=$(./hytale-downloader/hytale-downloader-linux --print-version)
