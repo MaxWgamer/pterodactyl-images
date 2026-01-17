@@ -56,6 +56,11 @@ elif [[ -f "HytaleServer.zip" ]]; then
 	unzip -o HytaleServer.zip -d .
 fi
 
+		NOW=$(date +%Y%m%d%H%M.%S)
+		date +%Y%m%d%H%M.%S
+		touch -t "$NOW" Server/HytaleServer.jar
+		touch -t "$NOW" Server/HytaleServer.aot
+
 # Download the latest hytale-sourcequery plugin if enabled
 if [ "${INSTALL_SOURCEQUERY_PLUGIN}" == "1" ]; then
 	mkdir -p mods
