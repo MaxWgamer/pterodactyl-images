@@ -30,7 +30,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
       - uses: docker/build-push-action@v5
         with:
-          context: ./games
+          context: ./games/${{ matrix.game }}
           file: ./games/${{ matrix.tag }}/Dockerfile
           platforms: linux/amd64
           push: true
