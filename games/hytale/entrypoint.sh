@@ -23,6 +23,7 @@ fi
 # If HYTALE_SERVER_SESSION_TOKEN isn't set, assume the user will log in themselves, rather than a host's GSP
 if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 	if [[ "$NEED_DOWNLOAD" == "1" ]]; then
+		echo -e "Downloading Hytale server..."
 		./hytale-downloader/hytale-downloader-linux \
 			-patchline "$HYTALE_PATCHLINE" \
 			-download-path HytaleServer.zip
@@ -34,6 +35,8 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 		if [[ -n "$LATEST_VERSION" ]]; then
 			echo "$LATEST_VERSION" > "$VERSION_CACHE_FILE"
 		fi
+	else
+		echo -e "Hytale is already up to date."
 	fi
 elif [[ -f "HytaleMount/HytaleServer.zip" ]]; then
 	unzip -o HytaleMount/HytaleServer.zip -d .
@@ -48,10 +51,14 @@ fi
 # Download the latest hytale-sourcequery plugin if enabled
 if [ "${INSTALL_SOURCEQUERY_PLUGIN}" == "1" ]; then
 	mkdir -p mods
+	echo -e "Downloading latest hytale-sourcequery plugin..."
 	LATEST_URL=$(curl -sSL https://api.github.com/repos/physgun-com/hytale-sourcequery/releases/latest \
 		| grep -oP '"browser_download_url":\s*"\K[^"]+\.jar' || true)
 	if [[ -n "$LATEST_URL" ]]; then
 		curl -sSL -o mods/hytale-sourcequery.jar "$LATEST_URL"
+		echo -e "Successfully downloaded hytale-sourcequery plugin to mods folder."
+	else
+		echo -e "Warning: Could not find hytale-sourcequery plugin download URL."
 	fi
 fi
 
