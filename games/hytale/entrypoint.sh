@@ -3,25 +3,24 @@ set -e
 
 cd /home/container
 
-VERSION_CACHE_FILE="version.cache"
-
-LATEST_VERSION=$(./hytale-downloader/hytale-downloader-linux --print-version 2>/dev/null || true)
-
-CACHED_VERSION=""
-if [[ -f "$VERSION_CACHE_FILE" ]]; then
-	CACHED_VERSION=$(cat "$VERSION_CACHE_FILE")
-fi
-
-NEED_DOWNLOAD=0
-
-if [[ -z "$CACHED_VERSION" ]]; then
-	NEED_DOWNLOAD=1
-elif [[ "$LATEST_VERSION" != "$CACHED_VERSION" ]]; then
-	NEED_DOWNLOAD=1
-fi
-
 # If HYTALE_SERVER_SESSION_TOKEN isn't set, assume the user will log in themselves, rather than a host's GSP
 if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
+	VERSION_CACHE_FILE="version.cache"
+
+	LATEST_VERSION=$(./hytale-downloader/hytale-downloader-linux --print-version 2>/dev/null || true)
+
+	CACHED_VERSION=""
+	if [[ -f "$VERSION_CACHE_FILE" ]]; then
+		CACHED_VERSION=$(cat "$VERSION_CACHE_FILE")
+	fi
+
+	NEED_DOWNLOAD=0
+
+	if [[ -z "$CACHED_VERSION" ]]; then
+		NEED_DOWNLOAD=1
+	elif [[ "$LATEST_VERSION" != "$CACHED_VERSION" ]]; then
+		NEED_DOWNLOAD=1
+	fi
 	if [[ "$NEED_DOWNLOAD" == "1" ]]; then
 		echo -e "Downloading Hytale server..."
 		./hytale-downloader/hytale-downloader-linux \
