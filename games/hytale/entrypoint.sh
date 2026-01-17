@@ -3,8 +3,6 @@ set -e
 
 cd /home/container
 
-date
-
 ./hytale-downloader/hytale-downloader-linux --print-version
 
 VERSION_CACHE_FILE="version.cache"
@@ -33,6 +31,10 @@ if [[ -z "$HYTALE_SERVER_SESSION_TOKEN" ]]; then
 			-download-path HytaleServer.zip
 
 		unzip -o HytaleServer.zip -d .
+		
+		# Fix problem with date and AOT cache when unzip
+		touch Server/HytaleServer.jar
+		touch Server/HytaleServer.aot
 
 		rm -f HytaleServer.zip
 
